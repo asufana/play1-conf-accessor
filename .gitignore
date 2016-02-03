@@ -1,10 +1,17 @@
 
-# eclipse stuff
+target
+
 .classpath
 .project
 .settings
+eclipse
 
-# misc
+/sample/play1-conf-accessor-test/.classpath
+/sample/play1-conf-accessor-test/.project
+/sample/play1-conf-accessor-test/.settings
+/sample/play1-conf-accessor-test/eclipse
+/sample/play1-conf-accessor-test/tmp
+/sample/play1-conf-accessor-test/test-result
+
 .DS_Store
 
-/target/
