@@ -12,6 +12,7 @@ eclipse
 /sample/play1-conf-accessor-test/eclipse
 /sample/play1-conf-accessor-test/tmp
 /sample/play1-conf-accessor-test/test-result
+/sample/play1-conf-accessor-test/app/generated/.gitignore
 
 .DS_Store
 
