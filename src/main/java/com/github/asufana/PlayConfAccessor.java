@@ -1,6 +1,7 @@
 package com.github.asufana;
 
 import java.io.*;
+import java.util.*;
 
 import javax.annotation.processing.*;
 import javax.lang.model.element.*;
@@ -9,16 +10,17 @@ import javax.tools.*;
 
 import com.squareup.javapoet.*;
 
-public class PlayConfAccessorGenerator {
+public class PlayConfAccessor {
     
     private final ProcessingEnvironment processingEnv;
     
-    public PlayConfAccessorGenerator(final ProcessingEnvironment processingEnv) {
+    //コンストラクタ
+    public PlayConfAccessor(final ProcessingEnvironment processingEnv) {
         this.processingEnv = processingEnv;
     }
     
-    public void generate() {
-        log("PlayConfAccessor - AnnotationProcessor");
+    /** アクセサクラス生成 */
+    public void generate(final List<String> confLines) {
         
         /** クラス定義 */
         final TypeSpec helloWorld = TypeSpec.classBuilder("HelloWorld")
@@ -30,6 +32,7 @@ public class PlayConfAccessorGenerator {
         writeClass("generated/HelloWorld", javaFile);
     }
     
+    /** クラスファイル書き出し */
     private void writeClass(final String fqcn, final JavaFile javaFile) {
         try {
             final JavaFileObject sourceFile = processingEnv.getFiler().createSourceFile(fqcn);
@@ -38,11 +41,11 @@ public class PlayConfAccessorGenerator {
             }
         }
         catch (final Exception e) {
-            log(e.getMessage());
-            throw new RuntimeException(e);
+            log(String.format("クラス書き出しエラー。Error: %s", e.getMessage()));
         }
     }
     
+    /** ログ出力 */
     private void log(final String msg) {
         final Messager messager = processingEnv.getMessager();
         messager.printMessage(Kind.NOTE, msg);
