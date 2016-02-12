@@ -11,6 +11,9 @@ import javax.lang.model.element.*;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.*;
 
+import com.github.asufana.playconf.*;
+
+/** アノテーションプロセッサ・エントリポイント */
 @SupportedAnnotationTypes("*")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class AnnotaitonProcessor extends AbstractProcessor {
@@ -24,13 +27,10 @@ public class AnnotaitonProcessor extends AbstractProcessor {
         log("PlayConfAccessor - AnnotationProcessor");
         
         //設定ファイル読み込み
-        final List<String> lines = readConf(getConf("../conf/application.conf"));
-        if (lines.isEmpty()) {
-            return true;
-        }
+        final PlayConf playConf = readConf(getConf("../conf/application.conf"));
         
         //設定ファイルアクセサ生成
-        new PlayConfAccessor(processingEnv).generate(lines);
+        new PlayConfAccessor(processingEnv).generate(playConf);
         
         return true;
     }
@@ -49,22 +49,23 @@ public class AnnotaitonProcessor extends AbstractProcessor {
     }
     
     /** 設定ファイル読み込み */
-    private List<String> readConf(final Optional<FileObject> file) {
+    private PlayConf readConf(final Optional<FileObject> file) {
         if (file.isPresent() == false) {
-            return Collections.emptyList();
+            return PlayConf.EMPTY;
         }
         
         try (BufferedReader br = new BufferedReader(new InputStreamReader(file.get()
                                                                               .openInputStream(),
                                                                           "UTF-8"))) {
-            return br.lines().collect(toList());
+            final List<String> confLines = br.lines().collect(toList());
+            return PlayConf.factory(confLines);
         }
         catch (final Exception e) {
             log(String.format("ファイル読み込みエラー。FilePath: %s, Error: %s",
                               file.get().getName(),
                               e.getMessage()));
         }
-        return Collections.emptyList();
+        return PlayConf.EMPTY;
     }
     
     /** ログ出力 */

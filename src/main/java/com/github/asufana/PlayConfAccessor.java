@@ -1,15 +1,16 @@
 package com.github.asufana;
 
 import java.io.*;
-import java.util.*;
 
 import javax.annotation.processing.*;
 import javax.lang.model.element.*;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.*;
 
+import com.github.asufana.playconf.*;
 import com.squareup.javapoet.*;
 
+/** アクセサクラス作成 */
 public class PlayConfAccessor {
     
     private final ProcessingEnvironment processingEnv;
@@ -20,7 +21,7 @@ public class PlayConfAccessor {
     }
     
     /** アクセサクラス生成 */
-    public void generate(final List<String> confLines) {
+    public void generate(final PlayConf playConf) {
         
         /** クラス定義 */
         final TypeSpec helloWorld = TypeSpec.classBuilder("HelloWorld")
