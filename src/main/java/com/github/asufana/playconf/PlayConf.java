@@ -16,6 +16,9 @@ public class PlayConf {
     
     //ファクトリ
     public static PlayConf factory(final List<String> confLines) {
+        if (confLines.isEmpty()) {
+            return EMPTY;
+        }
         final Map<FrameworkId, List<Config>> settings = PlayConfFactory.create(confLines);
         return new PlayConf(settings);
     }

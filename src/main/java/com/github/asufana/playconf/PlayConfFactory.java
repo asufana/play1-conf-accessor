@@ -11,6 +11,7 @@ import com.github.asufana.playconf.vo.*;
 
 public class PlayConfFactory {
     
+    //ファクトリ
     static Map<FrameworkId, List<Config>> create(final List<String> confLines) {
         //不要行除去
         final List<String> filtered = filterIgnoreLine(confLines);
@@ -19,7 +20,7 @@ public class PlayConfFactory {
         return frameworkIdMap;
     }
     
-    //PlayFrameworkIdでグルーピング
+    //フレームワークIDでグルーピング
     static Map<FrameworkId, List<Config>> groupByFrameworkId(final List<String> filtered) {
         final Map<FrameworkId, List<Config>> map = filtered.stream()
                                                            //フレームワークIDを抽出してKeyとする
@@ -27,7 +28,6 @@ public class PlayConfFactory {
                                                                                //フレームワークIDを除去した上でKey,Valueのtuple化する
                                                                                Collectors.mapping(frameworkIdRemoveFunction,
                                                                                                   toList())));
-        
         return map;
     }
     

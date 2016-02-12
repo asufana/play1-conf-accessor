@@ -1,23 +1,20 @@
-package com.github.asufana;
+package com.github.asufana.functions;
 
 import java.io.*;
 
 import javax.annotation.processing.*;
 import javax.lang.model.element.*;
-import javax.tools.Diagnostic.Kind;
 import javax.tools.*;
 
 import com.github.asufana.playconf.*;
 import com.squareup.javapoet.*;
 
 /** アクセサクラス作成 */
-public class PlayConfAccessor {
-    
-    private final ProcessingEnvironment processingEnv;
+public class ClassGenerator extends AbstractAPFunction {
     
     //コンストラクタ
-    public PlayConfAccessor(final ProcessingEnvironment processingEnv) {
-        this.processingEnv = processingEnv;
+    public ClassGenerator(final ProcessingEnvironment processingEnv) {
+        super(processingEnv);
     }
     
     /** アクセサクラス生成 */
@@ -46,9 +43,4 @@ public class PlayConfAccessor {
         }
     }
     
-    /** ログ出力 */
-    private void log(final String msg) {
-        final Messager messager = processingEnv.getMessager();
-        messager.printMessage(Kind.NOTE, msg);
-    }
 }
