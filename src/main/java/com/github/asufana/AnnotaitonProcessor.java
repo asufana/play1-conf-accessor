@@ -28,7 +28,7 @@ public class AnnotaitonProcessor extends AbstractProcessor {
         //設定ファイル読み込み
         final List<String> confLines = new PlayConfReader(processingEnv).read(PLAY_CONF_PATH);
         
-        //設定保持クラス
+        //設定保持クラス生成
         final PlayConf playConf = PlayConf.factory(confLines);
         
         //アクセサクラス生成

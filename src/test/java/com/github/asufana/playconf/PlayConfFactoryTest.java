@@ -7,6 +7,7 @@ import java.util.*;
 
 import org.junit.*;
 
+import com.github.asufana.playconf.collections.*;
 import com.github.asufana.playconf.vo.*;
 
 public class PlayConfFactoryTest {
@@ -38,16 +39,17 @@ public class PlayConfFactoryTest {
     //PlayFrameworkIdでグルーピング
     public void testGroupByFrameworkId() throws Exception {
         final List<String> filtered = PlayConfFactory.filterIgnoreLine(play1ConfSample);
-        final Map<FrameworkId, List<Config>> grouped = PlayConfFactory.groupByFrameworkId(filtered);
+        final Map<FrameworkId, ConfigList> grouped = PlayConfFactory.groupByFrameworkId(filtered);
         //グルーピングされていること
-        assertThat(grouped, is(new HashMap<FrameworkId, List<Config>>() {
+        assertThat(grouped, is(new HashMap<FrameworkId, ConfigList>() {
             {
-                put(new FrameworkId("%prod"), Arrays.asList(new Config("application.mode", "prod")));
+                put(new FrameworkId("%prod"),
+                    new ConfigList(Arrays.asList(new Config("application.mode", "prod"))));
             }
             {
                 put(new FrameworkId("%default"),
-                    Arrays.asList(new Config("application.name", "SampleProject"),
-                                  new Config("application.mode", "dev")));
+                    new ConfigList(Arrays.asList(new Config("application.name", "SampleProject"),
+                                                 new Config("application.mode", "dev"))));
             }
         }));
         

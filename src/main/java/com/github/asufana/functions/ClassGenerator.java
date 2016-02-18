@@ -3,7 +3,6 @@ package com.github.asufana.functions;
 import java.io.*;
 
 import javax.annotation.processing.*;
-import javax.lang.model.element.*;
 import javax.tools.*;
 
 import com.github.asufana.playconf.*;
@@ -20,14 +19,15 @@ public class ClassGenerator extends AbstractAPFunction {
     /** アクセサクラス生成 */
     public void generate(final PlayConf playConf) {
         
-        /** クラス定義 */
-        final TypeSpec helloWorld = TypeSpec.classBuilder("HelloWorld")
-                                            .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                                            .build();
-        final JavaFile javaFile = JavaFile.builder("generated", helloWorld).build();
+        final String className = "PlayConf";
+        final String pkgName = "generated";
         
+        /** クラスソース生成 */
+        final JavaFile javaFile = new SourceGenerator(processingEnv).generate(playConf,
+                                                                              pkgName,
+                                                                              className);
         /** クラスファイル生成 */
-        writeClass("generated/HelloWorld", javaFile);
+        writeClass(String.format("%s/%s", pkgName, className), javaFile);
     }
     
     /** クラスファイル書き出し */
@@ -39,7 +39,7 @@ public class ClassGenerator extends AbstractAPFunction {
             }
         }
         catch (final Exception e) {
-            log(String.format("クラス書き出しエラー。Error: %s", e.getMessage()));
+            log(String.format("PlayConfAccessor: クラス書き出しエラー。Error: %s", e));
         }
     }
     

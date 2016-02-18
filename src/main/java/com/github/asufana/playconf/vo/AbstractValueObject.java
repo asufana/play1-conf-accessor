@@ -23,9 +23,4 @@ public abstract class AbstractValueObject {
         return HashCodeBuilder.reflectionHashCode(this);
     }
     
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).toString();
-    }
-    
 }

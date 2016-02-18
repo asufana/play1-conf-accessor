@@ -7,28 +7,34 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+import com.github.asufana.playconf.collections.*;
 import com.github.asufana.playconf.vo.*;
 
 public class PlayConfFactory {
     
     //ファクトリ
-    static Map<FrameworkId, List<Config>> create(final List<String> confLines) {
+    static Map<FrameworkId, ConfigList> create(final List<String> confLines) {
         //不要行除去
         final List<String> filtered = filterIgnoreLine(confLines);
         //PlayFrameworkIdでグルーピング
-        final Map<FrameworkId, List<Config>> frameworkIdMap = groupByFrameworkId(filtered);
+        final Map<FrameworkId, ConfigList> frameworkIdMap = groupByFrameworkId(filtered);
         return frameworkIdMap;
     }
     
     //フレームワークIDでグルーピング
-    static Map<FrameworkId, List<Config>> groupByFrameworkId(final List<String> filtered) {
+    static Map<FrameworkId, ConfigList> groupByFrameworkId(final List<String> filtered) {
         final Map<FrameworkId, List<Config>> map = filtered.stream()
                                                            //フレームワークIDを抽出してKeyとする
                                                            .collect(groupingBy(frameworkIdParseFunction,
                                                                                //フレームワークIDを除去した上でKey,Valueのtuple化する
                                                                                Collectors.mapping(frameworkIdRemoveFunction,
                                                                                                   toList())));
-        return map;
+        
+        final Map<FrameworkId, ConfigList> map2 = map.entrySet()
+                                                     .stream()
+                                                     .collect(toMap(entry -> entry.getKey(),
+                                                                    entry -> new ConfigList(entry.getValue())));
+        return map2;
     }
     
     //文頭のフレームワークIDを抽出（%prodなど）
@@ -39,7 +45,7 @@ public class PlayConfFactory {
             return new FrameworkId(columns.get(0));
         }
         //それ以外はデフォルト値を設定
-        return new FrameworkId("%default");
+        return PlayConf.DEFAULT_FRAMEWORK_ID;
     };
     
     //文頭のフレームワークIDを除去
@@ -65,10 +71,10 @@ public class PlayConfFactory {
     //不要行除去
     static List<String> filterIgnoreLine(final List<String> confLines) {
         final List<String> filtered = confLines.stream().map(line -> line.replaceAll("^ +", "")) //文頭スペース除去
-                                               .filter(line -> line.startsWith("#") == false)
                                                //コメント除去
-                                               .filter(line -> isNotEmpty(line))
+                                               .filter(line -> line.startsWith("#") == false)
                                                //空行除去
+                                               .filter(line -> isNotEmpty(line))
                                                .collect(toList());
         return filtered;
     }
