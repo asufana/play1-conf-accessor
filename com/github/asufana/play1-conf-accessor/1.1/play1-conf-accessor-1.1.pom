@@ -3,7 +3,7 @@
 
 	<groupId>com.github.asufana</groupId>
 	<artifactId>play1-conf-accessor</artifactId>
-	<version>1.0</version>
+	<version>1.1</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -16,7 +16,7 @@
 		<connection>scm:git:git@github.com:asufana/play1-conf-accessor.git</connection>
 		<developerConnection>scm:git:git@github.com:asufana/play1-conf-accessor.git</developerConnection>
 		<url>scm:git:git@github.com:asufana/play1-conf-accessor.git</url>
-		<tag>play1-conf-accessor-1.0</tag>
+		<tag>play1-conf-accessor-1.1</tag>
 	</scm>
 
 	<build>
@@ -39,6 +39,7 @@
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
+					<appendAssemblyId>false</appendAssemblyId>
 				</configuration>
 				<executions>
 					<execution>
@@ -135,7 +136,6 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.16.2</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
