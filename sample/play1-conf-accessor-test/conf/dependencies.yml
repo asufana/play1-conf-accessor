@@ -2,3 +2,14 @@
 
 require:
     - play
+    - com.github.asufana -> play1-conf-accessor [1.0,)
+
+repositories:
+    - github:
+        type:   iBiblio
+        root:   https://raw.github.com/asufana/play1-conf-accessor/mvn-repo/
+        contains:
+            - com.github.asufana -> *
+
+
+
