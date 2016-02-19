@@ -3,7 +3,7 @@
 
 	<groupId>com.github.asufana</groupId>
 	<artifactId>play1-conf-accessor</artifactId>
-	<version>1.2-SNAPSHOT</version>
+	<version>1.2</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -16,7 +16,7 @@
 		<connection>scm:git:git@github.com:asufana/play1-conf-accessor.git</connection>
 		<developerConnection>scm:git:git@github.com:asufana/play1-conf-accessor.git</developerConnection>
 		<url>scm:git:git@github.com:asufana/play1-conf-accessor.git</url>
-		<tag>HEAD</tag>
+		<tag>play1-conf-accessor-1.2</tag>
 	</scm>
 
 	<build>
