@@ -1,20 +1,16 @@
 
-target
-
 .classpath
 .project
 .settings
-eclipse
+.factorypath
+
+target/
+eclipse/
+
+tmp/
+test-result/
 
 release.properties
-
-/sample/play1-conf-accessor-test/.classpath
-/sample/play1-conf-accessor-test/.project
-/sample/play1-conf-accessor-test/.settings
-/sample/play1-conf-accessor-test/.factorypath
-/sample/play1-conf-accessor-test/eclipse
-/sample/play1-conf-accessor-test/tmp
-/sample/play1-conf-accessor-test/test-result
 
 .DS_Store
 
