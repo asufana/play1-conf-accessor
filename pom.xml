@@ -123,19 +123,9 @@
 			<version>1.5.1</version>
 		</dependency>
 		<dependency>
-			<groupId>com.google.auto</groupId>
-			<artifactId>auto-common</artifactId>
-			<version>0.3</version>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.3.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.16.2</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
