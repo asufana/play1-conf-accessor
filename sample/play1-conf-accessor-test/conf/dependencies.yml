@@ -2,7 +2,10 @@
 
 require:
     - play
-    - com.github.asufana -> play1-conf-accessor [1.0,)
+    
+    # play conf accessor: 推移位的依存性を解決しない
+    - com.github.asufana -> play1-conf-accessor [1.0,):
+        transitive: false
 
 repositories:
     - github:
@@ -10,6 +13,4 @@ repositories:
         root:   https://raw.github.com/asufana/play1-conf-accessor/mvn-repo/
         contains:
             - com.github.asufana -> *
-
-
 
