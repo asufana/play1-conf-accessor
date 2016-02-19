@@ -12,7 +12,10 @@ conf/dependencies.yml
 ```yaml
 require:
     - play
-    - com.github.asufana -> play1-conf-accessor [1.0,)
+
+    # play conf accessor: 推移的依存性を解決しない
+    - com.github.asufana -> play1-conf-accessor [1.0,):
+                transitive: false
 
 repositories:
     - github:
