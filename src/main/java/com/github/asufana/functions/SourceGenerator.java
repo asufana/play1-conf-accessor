@@ -1,5 +1,6 @@
 package com.github.asufana.functions;
 
+import static java.util.stream.Collectors.*;
 import static org.apache.commons.lang3.StringUtils.*;
 
 import java.util.*;
@@ -11,7 +12,7 @@ import javax.lang.model.element.*;
 import com.github.asufana.playconf.*;
 import com.github.asufana.playconf.vo.*;
 import com.squareup.javapoet.*;
-import com.squareup.javapoet.TypeSpec.*;
+import com.squareup.javapoet.TypeSpec.Builder;
 
 /** アクセサクラスのソース生成 */
 public class SourceGenerator extends AbstractAPFunction {
@@ -22,9 +23,7 @@ public class SourceGenerator extends AbstractAPFunction {
     }
     
     /** ソース生成 */
-    public JavaFile generate(final PlayConf playConf,
-                             final String pkgName,
-                             final String className) {
+    public JavaFile generate(final PlayConf playConf, final String pkgName, final String className) {
         
         //ソース生成
         final Builder builder = TypeSpec.classBuilder(className).addModifiers(Modifier.PUBLIC);
@@ -51,6 +50,7 @@ public class SourceGenerator extends AbstractAPFunction {
         return MethodSpec.methodBuilder(key)
                          .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                          .returns(String.class)
+                         //.addJavadoc(generateComment(playConf, key))
                          .addCode(switchCaseString(playConf, key))
                          .build();
     }
@@ -98,6 +98,27 @@ public class SourceGenerator extends AbstractAPFunction {
                                                   "%",
                                                   configKey.replaceAll("_", "\\."));
         return String.format("throw new java.lang.RuntimeException(\"%s\");\n", errorMessage);
+    }
+    
+    //コメント生成
+    private String generateComment(final PlayConf playConf, final String key) {
+        final List<FrameworkId> frameworkIds = playConf.frameworkIds();
+        final String comment = frameworkIds.stream()
+                                           .sorted(Comparator.comparing(id -> id.toString()))
+                                           .map(id -> {
+                                               final String frameworkIdStr = id.equals(PlayConf.DEFAULT_FRAMEWORK_ID)
+                                                       ? ""
+                                                       : "%" + id.toString() + ".";
+                                               final String configKey = key.replaceAll("_", "\\.");
+                                               final String configValue = playConf.configValue(id,
+                                                                                               key);
+                                               return String.format("%s%s=%s",
+                                                                    frameworkIdStr,
+                                                                    configKey,
+                                                                    configValue);
+                                           })
+                                           .collect(joining("\n"));
+        return comment;
     }
     
 }
